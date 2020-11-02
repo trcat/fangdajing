@@ -4,9 +4,14 @@ class Fangdajin {
     this.img = null;
     this.canvas = null;
     this.ctx = null;
+    this.areaRect = null;
+
+    this.container.style.position = "relative";
   }
   init() {
     this.generateCanvas();
+    this.generateAreaRect();
+    this.drawImage();
   }
   generateCanvas() {
     const canvas = document.createElement("canvas");
@@ -17,7 +22,6 @@ class Fangdajin {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.container.append(this.canvas);
-    this.drawImage();
   }
   drawImage() {
     const img = new Image();
@@ -26,6 +30,9 @@ class Fangdajin {
       this.ctx.drawImage(this.img, 0, 0);
     });
     this.img = img;
+  }
+  generateAreaRect() {
+    
   }
 }
 
