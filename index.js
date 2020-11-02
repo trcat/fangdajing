@@ -1,17 +1,25 @@
 class Fangdajin {
-  constructor(options) {
+  constructor(options = {}) {
     this.container = document.querySelector(options.el);
+    this.areaRectWidth = options.areaWidth || 250;
+    this.areaRectHeight = options.areaHeight || 300;
+    this.viewWidth = options.viewWidth || this.areaRectWidth;
+    this.viewHeight = options.viewHeight || this.areaRectHeight;
+    this.largeSize = options.largeSize || 2;
     this.img = null;
     this.canvas = null;
     this.ctx = null;
     this.areaRect = null;
-    this.areaRectWidth = 250;
-    this.areaRectHeight = 300;
     this.sideCanvas = null;
     this.sideCtx = null;
   }
   init() {
-    this.container.style.position = "relative";
+    // 检查 container 是否存在
+    if (!this.container) {
+      throw new Error("请检查是否设定 el 属性");
+    } else {
+      this.container.style.position = "relative";
+    }
 
     this.generateCanvas();
     this.generateAreaRect();
@@ -39,11 +47,11 @@ class Fangdajin {
   }
   generateSideCanvas() {
     const canvas = document.createElement("canvas");
-    canvas.width = this.areaRectWidth * 2;
-    canvas.height = this.areaRectHeight * 2;
+    canvas.width = this.viewWidth;
+    canvas.height = this.viewHeight;
     canvas.style.position = "absolute";
     canvas.style.top = 0;
-    canvas.style.right = "-" + this.areaRectWidth * 2 + "px";
+    canvas.style.right = "-" + this.viewWidth + "px";
     this.sideCanvas = canvas;
     this.container.append(this.sideCanvas);
     this.sideCtx = this.sideCanvas.getContext("2d");
@@ -101,10 +109,10 @@ class Fangdajin {
           cTop,
           this.areaRectWidth,
           this.areaRectHeight,
-          0,
-          0,
-          this.areaRectWidth * 2,
-          this.areaRectHeight * 2
+          (this.areaRectWidth * this.largeSize - this.viewWidth) * -1 / 2,
+          (this.areaRectHeight * this.largeSize - this.viewHeight) * -1 / 2,
+          this.areaRectWidth * this.largeSize,
+          this.areaRectHeight * this.largeSize
         );
       }
     });
@@ -128,5 +136,10 @@ class Fangdajin {
 }
 
 new Fangdajin({
-  el: ".fangdajin",
+  el: ".fangdajin", // 目标 css class, 必填
+  areaWidth: 250, // 选择区域的宽度， 选填
+  areaHeight: 300, // 选择区域的高度， 选填
+  viewWidth: 250, // 显示区域的宽度， 选填
+  viewHeight: 300, // 显示区域的高度， 选填
+  largeSize: 2, // 发大选择区域的倍数， 选填
 }).init();
