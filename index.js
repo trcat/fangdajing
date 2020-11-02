@@ -7,12 +7,15 @@ class Fangdajin {
     this.areaRect = null;
     this.areaRectWidth = 250;
     this.areaRectHeight = 300;
-
-    this.container.style.position = "relative";
+    this.sideCanvas = null;
+    this.sideCtx = null;
   }
   init() {
+    this.container.style.position = "relative";
+
     this.generateCanvas();
     this.generateAreaRect();
+    this.generateSideCanvas();
     this.drawImage();
     this.addEventListener();
   }
@@ -34,6 +37,17 @@ class Fangdajin {
     this.areaRect = areaRect;
     document.body.append(this.areaRect);
   }
+  generateSideCanvas() {
+    const canvas = document.createElement("canvas");
+    canvas.width = this.areaRectWidth * 2;
+    canvas.height = this.areaRectHeight * 2;
+    canvas.style.position = "absolute";
+    canvas.style.top = 0;
+    canvas.style.right = "-" + this.areaRectWidth * 2 + "px";
+    this.sideCanvas = canvas;
+    this.container.append(this.sideCanvas);
+    this.sideCtx = this.sideCanvas.getContext("2d");
+  }
   drawImage() {
     const img = new Image();
     img.src = this.container.getAttribute("data-img-src");
@@ -48,6 +62,8 @@ class Fangdajin {
       const y = e.clientY;
       const containerWidth = this.getElementWidth(this.container);
       const containerHeight = this.getElementHeight(this.container);
+
+      // 定义多区域框的位置
       const minTop = this.container.getBoundingClientRect().top;
       const maxTop = minTop + containerHeight;
       const minLeft = this.container.getBoundingClientRect().left;
@@ -68,10 +84,28 @@ class Fangdajin {
         } else if (y > maxTop - this.areaRectHeight / 2) {
           top = maxTop - this.areaRectHeight;
         }
-
+        // 防止滚轮造成数据偏差
+        top += window.scrollY;
+        left += window.scrollX;
+        // 设置 areaRect 位置
         this.areaRect.style.display = "block";
         this.areaRect.style.top = top + "px";
         this.areaRect.style.left = left + "px";
+        // 绘画放大内容
+        const cTop = top - minTop - window.scrollY;
+        const cLeft = left - minLeft - window.scrollX;
+        this.sideCtx.clearRect(0, 0, this.areaRectWidth, this.areaRectHeight);
+        this.sideCtx.drawImage(
+          this.canvas,
+          cLeft,
+          cTop,
+          this.areaRectWidth,
+          this.areaRectHeight,
+          0,
+          0,
+          this.areaRectWidth * 2,
+          this.areaRectHeight * 2
+        );
       }
     });
   }
