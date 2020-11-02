@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +13,27 @@
       margin: 0;
       padding: 0;
     }
+
     .fangdajin {
       width: 1121px;
       height: 701px;
     }
   </style>
 </head>
+
 <body>
   <div class="fangdajin" data-img-src="./image.jpg"></div>
-  <script src="./index.js"></script>
+  <script src="./dist/index.min.js"></script>
+  <script>
+    new Fangdajin({
+      el: ".fangdajin", // 目标 css class, 必填
+      areaWidth: 250, // 选择区域的宽度， 选填
+      areaHeight: 300, // 选择区域的高度， 选填
+      viewWidth: 250, // 显示区域的宽度， 选填
+      viewHeight: 300, // 显示区域的高度， 选填
+      largeSize: 2, // 发大选择区域的倍数， 选填
+    }).init();
+  </script>
 </body>
+
 </html>

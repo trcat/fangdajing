@@ -109,8 +109,8 @@ class Fangdajin {
           cTop,
           this.areaRectWidth,
           this.areaRectHeight,
-          (this.areaRectWidth * this.largeSize - this.viewWidth) * -1 / 2,
-          (this.areaRectHeight * this.largeSize - this.viewHeight) * -1 / 2,
+          ((this.areaRectWidth * this.largeSize - this.viewWidth) * -1) / 2,
+          ((this.areaRectHeight * this.largeSize - this.viewHeight) * -1) / 2,
           this.areaRectWidth * this.largeSize,
           this.areaRectHeight * this.largeSize
         );
@@ -135,11 +135,8 @@ class Fangdajin {
   }
 }
 
-new Fangdajin({
-  el: ".fangdajin", // 目标 css class, 必填
-  areaWidth: 250, // 选择区域的宽度， 选填
-  areaHeight: 300, // 选择区域的高度， 选填
-  viewWidth: 250, // 显示区域的宽度， 选填
-  viewHeight: 300, // 显示区域的高度， 选填
-  largeSize: 2, // 发大选择区域的倍数， 选填
-}).init();
+try {
+  if (exports) {
+    exports.default = Fangdajin;
+  }
+} catch {}
