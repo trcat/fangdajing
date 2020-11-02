@@ -4,7 +4,7 @@ const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 
 function defaultTask() {
-  return src("index.js")
+  return src("fangdajin.js")
     .pipe(
       babel({
         presets: ["@babel/preset-env"],
