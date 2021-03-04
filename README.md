@@ -1,6 +1,10 @@
 # fangdajing
 放大镜组件
 
+## demo
+
+[demo](https://trcat.github.io/fangdajing/)
+
 ## 使用方式
 
 1. 引入 `fangdajin.min.js`
